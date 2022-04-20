@@ -4,8 +4,10 @@ import Axios from "axios";
 
 function App() {
   const [nome, setNome] = useState("");
-  const [telefone, setTelefone] = useState("");
+  const [telefone, setTelefone] = useState(0);
   const [lista, setLista] = useState([]);
+  const [NewNome, setNewNome] = useState("");
+  const [NewTelefone, setNewTelefone] = useState(0);
 
   useEffect(() => {
     Axios.get("http://localhost:3001/api/get").then((response) => {
@@ -20,6 +22,26 @@ function App() {
     });
 
     setLista([...lista, { nome: nome, telefone: telefone }]);
+  };
+
+  const updateForm = (id) => {
+    Axios.put("http://localhost:3001/api/update", {
+      id: id,
+      nome: NewNome,
+      telefone: NewTelefone,
+    }).then((response) => {
+      setLista(
+        lista.map((val) => {
+          return val.id == id
+            ? { id: val.id, nome: val.nome, telefone: val.telefone }
+            : val;
+        })
+      );
+    });
+  };
+
+  const deleteForm = (id) => {
+    Axios.delete(`http://localhost:3001/api/delete/${id}`);
   };
 
   return (
@@ -50,19 +72,43 @@ function App() {
         {lista.map((val) => {
           return (
             <div className="card">
-              <div class="row">
-                <div class="col-6">
-                  Nome: {val.nome} | Telefone: {val.telefone}
-                  <button id="delete">Delete</button>
+              <div className="row">
+                <div className="col-6">
+                  {val.id} Nome: {val.nome} <br></br> Telefone: {val.telefone}
+                  <button
+                    id="delete"
+                    onClick={() => {
+                      deleteForm(val.id);
+                    }}
+                  >
+                    Delete
+                  </button>
                 </div>
-                <div class="col-6">
-                  <input type="text" id="updateForm" placeholder="Nome"></input>
+                <div className="col-6">
+                  <input
+                    type="text"
+                    id="updateForm"
+                    placeholder="Nome"
+                    onChange={(e) => {
+                      setNewNome(e.target.value);
+                    }}
+                  />
                   <input
                     type="text"
                     id="updateForm"
                     placeholder="Telefone"
-                  ></input>
-                  <button id="update">Update</button>
+                    onChange={(e) => {
+                      setNewTelefone(e.target.value);
+                    }}
+                  />
+                  <button
+                    id="update"
+                    onClick={() => {
+                      updateForm(val.id);
+                    }}
+                  >
+                    Update
+                  </button>
                 </div>
               </div>
             </div>

@@ -21,8 +21,8 @@
 }
 
 .card {
-  width: 550px;
-  height: 80px;
+  width: 40%;
+  height: 90px;
   background-color: azure;
   border: 1px solid black;
   border-radius: 8px;
@@ -61,7 +61,7 @@
   border: 0;
   border-radius: 8px;
   position: absolute;
-  right: 200px;
+  right: 33%;
   color: white;
   text-shadow: black;
   background-color: #dc3545;
@@ -75,7 +75,7 @@
   border: 0;
   border-radius: 8px;
   position: absolute;
-  right: 185px;
+  right: 32%;
   color: white;
   text-shadow: black;
   background-color: #0d6efd;
