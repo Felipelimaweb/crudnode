@@ -32,7 +32,7 @@ function App() {
     }).then((response) => {
       setLista(
         lista.map((val) => {
-          return val.id == id
+          return val.id === id
             ? { id: val.id, nome: val.nome, telefone: val.telefone }
             : val;
         })
